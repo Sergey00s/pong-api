@@ -73,14 +73,19 @@ class Game:
 		self.score2 = 0
 		self.state = "menu"
 		self.gameid = None
-
-
+		
 	def run(self):
-		inittime = time.time()
+		target_fps = 60
+		frame_time = 1 / target_fps
 		while True:
-			delta = time.time() - inittime
-			self.update(delta)
-			time.sleep(0.01)
+			start_time = time.time()
+
+            # Your update logic here
+			self.update(frame_time)
+			elapsed_time = time.time() - start_time
+			# Calculate the time to sleep to achieve the target fps
+			sleep_time = max(0, frame_time - elapsed_time)
+			time.sleep(sleep_time)
 
 	def score_2(self):
 		self.score2 += 1
