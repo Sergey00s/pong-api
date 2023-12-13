@@ -1,6 +1,6 @@
 #flask api
 
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, abort
 from flask_cors import CORS
 from Room import Room
 
@@ -13,6 +13,29 @@ app = Flask(__name__)
 CORS(app)
 games = []
 
+ip_request_count = {}
+
+# Bir IP'ye izin verilen maksimum istek sayısı
+max_requests_per_minute = 70
+
+# İstek geldiğinde çağrılan middleware fonksiyonu
+@app.before_request
+def limit_request():
+    ip = request.remote_addr
+
+    # IP adresini takip etmek için bir giriş oluştur
+    if ip not in ip_request_count:
+        ip_request_count[ip] = {'count': 1, 'timestamp': datetime.now()}
+    else:
+        # IP'ye yapılan son isteğin üzerinden bir dakika geçmişse sıfırla
+        if datetime.now() - ip_request_count[ip]['timestamp'] > timedelta(minutes=1):
+            ip_request_count[ip] = {'count': 1, 'timestamp': datetime.now()}
+        else:
+            # Bir dakika içindeki toplam istek sayısını kontrol et
+            if ip_request_count[ip]['count'] >= max_requests_per_minute:
+                abort(429)  # Too Many Requests HTTP kodu ile isteği reddet
+
+            ip_request_count[ip]['count'] += 1
 
 @app.route(endpointroot + "/ping" , methods=['GET'])
 def ping():
