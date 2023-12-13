@@ -43,7 +43,7 @@ class Ball:
 		self.y = y
 		self.radius = radius
 		self.direction = [np.random.choice([-1, 1]), np.random.choice([-1, 1])]
-		self.speed = 10
+		self.speed = 40
 
 
 	def reset(self):
