@@ -15,7 +15,7 @@ games = []
 
 ip_request_count = {}
 
-max_requests_per_minute = 1000
+max_requests_per_minute = 10000
 
 @app.before_request
 def limit_request():
