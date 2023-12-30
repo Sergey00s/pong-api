@@ -17,20 +17,20 @@ ip_request_count = {}
 
 max_requests_per_minute = 100000
 
-@app.before_request
-def limit_request():
-    ip = request.remote_addr
+# @app.before_request
+# def limit_request():
+#     ip = request.remote_addr
 
-    if ip not in ip_request_count:
-        ip_request_count[ip] = {'count': 1, 'timestamp': datetime.now()}
-    else:
-        if datetime.now() - ip_request_count[ip]['timestamp'] > timedelta(minutes=1):
-            ip_request_count[ip] = {'count': 1, 'timestamp': datetime.now()}
-        else:
-            if ip_request_count[ip]['count'] >= max_requests_per_minute:
-                abort(429)  # Too Many Requests HTTP kodu ile isteği reddet
+#     if ip not in ip_request_count:
+#         ip_request_count[ip] = {'count': 1, 'timestamp': datetime.now()}
+#     else:
+#         if datetime.now() - ip_request_count[ip]['timestamp'] > timedelta(minutes=1):
+#             ip_request_count[ip] = {'count': 1, 'timestamp': datetime.now()}
+#         else:
+#             if ip_request_count[ip]['count'] >= max_requests_per_minute:
+#                 abort(429)  # Too Many Requests HTTP kodu ile isteği reddet
 
-            ip_request_count[ip]['count'] += 1
+#             ip_request_count[ip]['count'] += 1
 
 @app.route(endpointroot + "/ping" , methods=['GET'])
 def ping():
