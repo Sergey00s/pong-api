@@ -100,7 +100,7 @@ def join_game():
 def move():
 	data = request.get_json()
 	gameid = data['gameid']
-	player = data['player']
+	player = int(data['player'])
 	password = data['password']
 	direction = data['direction']
 	player_pass = None
