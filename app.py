@@ -109,13 +109,15 @@ def move():
 	except KeyError:
 		pass
 	game = get_game(gameid)
-
+	print(direction)
 	if game is None:
 		return jsonify({'response': 'game does not exist'}), 404
 	if game.password != password:
 		return jsonify({'response': 'wrong password'}), 401
 	if game.move_paddle(player, direction, player_pass):
+		print("succes")
 		return jsonify({'response': 'paddle moved'}), 200
+	print("not")
 	return jsonify({'response': 'wrong password'}), 401
 
 
