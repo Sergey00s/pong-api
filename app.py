@@ -99,6 +99,7 @@ def join_game():
 @app.route(endpointroot+"/move", methods=['POST'])
 def move():
 	data = request.get_json()
+	print("in, ", data)
 	gameid = data['gameid']
 	player = data['player']
 	password = data['password']
