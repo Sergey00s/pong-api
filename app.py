@@ -99,7 +99,6 @@ def join_game():
 @app.route(endpointroot+"/move", methods=['POST'])
 def move():
 	data = request.get_json()
-	print("in, ", data)
 	gameid = data['gameid']
 	player = data['player']
 	password = data['password']
@@ -115,10 +114,6 @@ def move():
 	if game.password != password:
 		return jsonify({'response': 'wrong password'}), 401
 	if game.move_paddle(player, direction, player_pass):
-		print("succes")
-		p1_pos = game.get_paddle_pos(1)
-		p2_pos = game.get_paddle_pos(2)
-		print("possed = ", p1_pos, p2_pos)
 		return jsonify({'response': 'paddle moved'}), 200
 	print("not")
 	return jsonify({'response': 'wrong password'}), 401
