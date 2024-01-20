@@ -134,6 +134,7 @@ def get_state(gameid):
 	state = game.get_state()
 	score1 = game.game.score1
 	score2 = game.game.score2
+	print(p1_pos, p2_pos)
 	return jsonify({'ball_pos': ball_pos, 'p1_pos': p1_pos, 'p2_pos': p2_pos, 'state': state, 'score1': score1, 'score2': score2}), 200
 
 
