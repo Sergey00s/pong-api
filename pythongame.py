@@ -23,9 +23,9 @@ class Paddle:
 		self.y = self.firstpos[1]
 
 	def move(self, direction):
-		if direction == "up" and self.y > 0:
+		if direction == "up":
 			self.y -= 15
-		if direction == "down" and self.y < sizey - self.height:
+		if direction == "down":
 			self.y += 15
 
 	def beready(self):
