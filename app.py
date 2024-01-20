@@ -109,13 +109,15 @@ def move():
 	except KeyError:
 		pass
 	game = get_game(gameid)
-	print(direction)
 	if game is None:
 		return jsonify({'response': 'game does not exist'}), 404
 	if game.password != password:
 		return jsonify({'response': 'wrong password'}), 401
 	if game.move_paddle(player, direction, player_pass):
 		print("succes")
+		p1_pos = game.get_paddle_pos(1)
+		p2_pos = game.get_paddle_pos(2)
+		print("possed = ", p1_pos, p2_pos)
 		return jsonify({'response': 'paddle moved'}), 200
 	print("not")
 	return jsonify({'response': 'wrong password'}), 401
@@ -134,7 +136,6 @@ def get_state(gameid):
 	state = game.get_state()
 	score1 = game.game.score1
 	score2 = game.game.score2
-	print(p1_pos, p2_pos)
 	return jsonify({'ball_pos': ball_pos, 'p1_pos': p1_pos, 'p2_pos': p2_pos, 'state': state, 'score1': score1, 'score2': score2}), 200
 
 
