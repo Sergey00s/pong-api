@@ -61,9 +61,9 @@ def new_game():
 			return jsonify({'response': 'game already exists'}), 409
 	if games.count(gameid) > 0:
 		return jsonify({'response': 'game already exists'}), 409
-	for i in games:
-		if i.isdestroyed == True:
-			games.remove(i)
+	for i in range(0, len(games)):
+		if games[i].isdestroyed:
+			games.pop(i)
 	if games.__len__() > 2:
 		return jsonify({'response': 'server full'}), 503
 	games.append(Room(gameid, password, private, password_p1, password_p2))
