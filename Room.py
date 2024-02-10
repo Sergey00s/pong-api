@@ -4,17 +4,24 @@ import time
 
 
 
-def timing(seconds=10, callback=None):
+def timing(seconds=10, callback=None, endcall=None):
 		start = time.time()
 		while True:
 			if time.time() - start > seconds:
 				if callback is not None:
 					try:
-						callback()
+						if (callback):
+							callback()
 					except:
 						return
 				break
 			time.sleep(1)
+		try:
+			if endcall:
+				endcall()
+		except:
+			return
+		
 
 class Room:
 	def __init__(self, game_id, password, private=False, p1pass=None, p2pass=None):
@@ -55,8 +62,13 @@ class Room:
 		self.winner = winner
 		timing(60, self.destroy)
 
+
+	def stopif(self):
+		if self.game.state == "menu":
+			self.destroy()
+
 	def timer(self):
-		thr = th.Thread(target=timing, args=(60, self.start))
+		thr = th.Thread(target=timing, args=(60, self.start, self.stopif))
 		thr.start()
 
 
